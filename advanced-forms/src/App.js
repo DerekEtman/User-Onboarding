@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {useState} from 'react';
 import OnboardForm from './components/Form';
 import './App.css';
 
 function App() {
   return (
-    <div>
+    <div className="App">
       <OnboardForm />
     </div>
     );
