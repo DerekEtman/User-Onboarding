@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Form, withFormik, Field } from 'formik';
+import { Container, Row, Col } from 'reactstrap';
 import axios from 'axios';
 import * as Yup from "yup";
 
@@ -43,13 +44,14 @@ const OnboardForm = ({errors, touched, values, status}) => {
                 <button type="submit">Submit</button>
             </Form>
 
+         <Container>
             {users.map(user =>(
-                <div key={user.id}>
+                <div key={user.id} className="userCard">
                     <p>Name: {user.name}</p>
                     <p>Email: {user.email}</p>
-                    <p>Password: {user.password}</p>
                 </div>
             ))}
+         </Container>
     </div>
     );
 };
@@ -67,6 +69,7 @@ const FormikOnboardForm = withFormik({
         name: Yup.string().required("Please enter your name"),
         email: Yup.string().required("Please enter your email"),
         password: Yup.string().required("Please enter your password"),
+        termsOfService: Yup.boolean().oneOf([true], "Please agree")
     }),
     handleSubmit( values, { setStatus } ){
         axios
@@ -74,7 +77,7 @@ const FormikOnboardForm = withFormik({
             .then(response => {
                 setStatus(response.data)      })
             .catch(err => console.log("Api Error: ", err.response));
-    }
+    },
 })(OnboardForm);
 
 
